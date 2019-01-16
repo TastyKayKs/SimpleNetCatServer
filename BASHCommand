@@ -1,1 +1,1 @@
-
+while true ; do echo -e "HTTP/1.1 200 OK\r\nContent-Length: 278\r\nContent-Type: text/html; charset=utf-8\r\n\r\n<html><meta http-equiv=\"refresh\" content=\"3; URL=https://www.youtube.com/watch?v=ZiE3aVQGf8o\"><a href=\"https://www.youtube.com/watch?v=ZiE3aVQGf8o\" style=\"text-decoration: none;\"><div style=\"transform: rotate(180deg); text-align: center; font-size: 10em;\">\xF0\x9F\x91\x8C</div></a></html>" | nc -q 1 -i 1 -vl 80 2>&1 | tee -a web_log; date | tee -a web_log; echo " " >> web_log; done
