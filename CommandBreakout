@@ -32,7 +32,7 @@ while true;
       </html>" | 
       
     //pipe into a verbose netcat which quits after 1 second after passing the last line to the client. It also waits one second between each line sent and received (-i 1) and listens on 80. We use the 2&>1 because we want to capture error code so we redirect error to STDOUT
-    nc -q 1 -i 1 -vl 80 2>&1 | 
+    nc -q 1 -i 1 -vvvl 80 2>&1 | 
         
     //we pipe and then tee the nc output so we can see output on the console AND put it in the file
     tee -a web_log; 
