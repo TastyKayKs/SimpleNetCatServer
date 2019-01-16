@@ -1,0 +1,47 @@
+//THIS IS ONLY FOR EXPLANATION, THIS WILL NOT WORK IN BASH!!!
+//IF YOU WANT TO RUN THIS COMMAND USE THE OTHER FILE IN THIS REPOSITORY!!!
+//COPY AND PASTE THAT ONE INTO YOUR BASH CONSOLE NOT THIS ONE!!!
+
+
+//Loop forever
+while true;
+  //start loop
+  do
+    //echo this as a huge string (and accept expressions so we can put an emoji on this page)
+    echo -e "
+      //header response from the "server"
+      HTTP/1.1 200 OK\r\n
+      Content-Length: 278\r\n
+      Content-Type: text/html; charset=utf-8\r\n\r\n
+      
+      //The actual HTML for the page 
+      <html>  
+        //redirect after three seconds to the youtube link
+        <meta http-equiv=\"refresh\" content=\"3; URL=https://www.youtube.com/watch?v=ZiE3aVQGf8o\">
+        
+        //The link for the youtube vid, so that people can click on the emoji as well instead of being redirected
+        <a href=\"https://www.youtube.com/watch?v=ZiE3aVQGf8o\" style=\"text-decoration: none;\">
+          
+          //a div so that we can apply some css in a nice simple way to the emoji to flip it over, make it big, and remove the blue line underneath (left over from making it a link) 
+          <div style=\"transform: rotate(180deg); text-align: center; font-size: 10em;\">
+            
+            //the actual bytes of the emoji (here we use the actual expression for the four bytes that make up this emoji; this is why we used the -e earlier)
+            \xF0\x9F\x91\x8C
+          </div>
+        </a>
+      </html>" | 
+      
+    //pipe into a verbose netcat which quits after 1 second after passing the last line to the client. It also waits one second between each line sent and received (-i 1) and listens on 80. We use the 2&>1 because we want to capture error code so we redirect error to STDOUT
+    nc -q 1 -i 1 -vl 80 2>&1 | 
+        
+    //we pipe and then tee the nc output so we can see output on the console AND put it in the file
+    tee -a web_log; 
+        
+    //As a separate command we also get the datetime and tee it so we can timestamp activity in both console and log
+    date | tee -a web_log;
+        
+    //Add a new line for clarity between connections in log
+    echo " " >> web_log;
+  
+  //end loop
+  done
