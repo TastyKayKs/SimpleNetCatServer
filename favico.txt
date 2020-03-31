@@ -1,0 +1,3 @@
+how to stop fav ico requests
+
+<link rel="icon" href="data:,">
